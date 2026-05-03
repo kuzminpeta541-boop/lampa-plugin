@@ -4,7 +4,7 @@
     if (!window.Lampa) return;
 
     function openUakino() {
-        Lampa.Noty.show('UAKINO');
+        Lampa.Noty.show('Відкриваю UAKINO');
 
         if (Lampa.Utils && Lampa.Utils.openUrl) {
             Lampa.Utils.openUrl('https://uakino.best/ua/');
@@ -13,20 +13,29 @@
         }
     }
 
-    Lampa.Listener.follow('app', function (e) {
-        if (e.type == 'ready') {
+    // чекаємо відкриття сторінки фільму
+    Lampa.Listener.follow('full', function (e) {
+
+        // важливо: саме complete (у деяких збірках пишеться complite)
+        if (e.type === 'complite' || e.type === 'complete') {
 
             try {
-                Lampa.Controller.add('uakino', {
-                    title: 'UAKINO',
-                    icon: 'movie',
-                    onSelect: openUakino
-                });
-            }
-            catch (err) {
-                console.log('UAKINO plugin error:', err);
-            }
+                // e.object = сторінка фільму
+                if (e.object && e.object.addButton) {
 
+                    e.object.addButton({
+                        title: 'UAKINO',
+                        icon: 'link',
+                        onSelect: openUakino
+                    });
+
+                } else {
+                    console.log('UAKINO: addButton не знайдено в цій версії Lampa');
+                }
+
+            } catch (err) {
+                console.log('UAKINO error:', err);
+            }
         }
     });
 
