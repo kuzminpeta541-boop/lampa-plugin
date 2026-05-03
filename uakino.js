@@ -1,13 +1,25 @@
 (function () {
-    'use strict';
+    try {
 
-    console.log('UAKINO plugin loaded');
+        console.log('PLUGIN START');
 
-    if (!window.Lampa) {
-        console.log('Lampa not found');
-        return;
+        // перевірка чи Lampa існує
+        if (typeof window.Lampa === 'undefined') {
+            console.log('NO LAMPA');
+            return;
+        }
+
+        // просто нотіфікація без будь-яких API
+        setTimeout(function () {
+            try {
+                Lampa.Noty.show('PLUGIN LOADED OK');
+            } catch (e) {
+                console.log('Noty error', e);
+            }
+        }, 2000);
+
     }
-
-    Lampa.Noty.show('UAKINO plugin OK');
-
+    catch (e) {
+        console.log('PLUGIN CRASH:', e);
+    }
 })();
