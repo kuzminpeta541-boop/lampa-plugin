@@ -1,24 +1,22 @@
 Lampa.Plugin.create({
     name: 'UAKINO',
-    version: '1.0.1',
-    description: 'UAKINO кнопка',
+    version: '1.0.2',
+    description: 'UAKINO',
 
     init: function () {
+
+        function openUakino(){
+            Lampa.Noty.show('UAKINO');
+
+            Lampa.Utils.openUrl('https://uakino.best/ua/');
+        }
 
         Lampa.Listener.follow('app', function(e){
             if(e.type == 'ready'){
 
-                Lampa.Menu.add({
-                    title: 'UAKINO',
+                Lampa.Controller.add('uakino', {
                     icon: 'movie',
-                    onSelect: function(){
-                        Lampa.Noty.show('Відкриваю UAKINO');
-
-                        Lampa.Activity.push({
-                            url: 'https://uakino.best/ua/',
-                            title: 'UAKINO'
-                        });
-                    }
+                    onSelect: openUakino
                 });
 
             }
